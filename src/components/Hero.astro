@@ -7,10 +7,7 @@ const { profile } = Astro.props as { profile: Profile };
   <h1>{profile.name}</h1>
   <p class="title">{profile.title}</p>
   <p class="pitch">{profile.pitch}</p>
-  <p class="pills">{profile.pills.map((p) => <span class="pill">{p}</span>)}</p>
   <p class="actions">
-    <a class="btn primary" href="/cv.pdf">Download CV</a>
-    <a class="btn" href={`mailto:${profile.links.email}`}>Email</a>
     <a class="btn" href={profile.links.github} rel="me">GitHub</a>
     <a class="btn" href={profile.links.linkedin} rel="me">LinkedIn</a>
   </p>
@@ -35,12 +32,6 @@ const { profile } = Astro.props as { profile: Profile };
   .pitch {
     max-width: 40rem;
     font-size: 1.1rem;
-    margin: 0 0 1rem;
-  }
-  .pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
     margin: 0 0 1.25rem;
   }
   .actions {

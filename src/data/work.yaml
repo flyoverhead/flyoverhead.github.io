@@ -1,0 +1,6 @@
+- title: Greenfield IaC platform
+  kind: platform
+  oneLiner: Built during my probation period, then adopted as the organisation's standard for service delivery.
+- title: AI plugin marketplace
+  kind: ai
+  oneLiner: "Claude Code plugins for the team: Terraform modules in days instead of weeks, Ansible roles in a day instead of a week."

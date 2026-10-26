@@ -141,25 +141,6 @@ svg {
   font-size: 0.8rem;
 }
 
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.15rem 0.65rem;
-  border-radius: 99px;
-  background: var(--surface);
-  border: 1px solid var(--surface-border);
-  font-size: 0.8rem;
-}
-
-.pill::before {
-  content: '';
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: var(--green);
-}
-
 .sr-only:not(:focus) {
   position: absolute;
   width: 1px;

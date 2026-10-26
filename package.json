@@ -7,12 +7,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/fetch-repos.ts && astro build && node scripts/render.ts",
+    "build": "astro build && node scripts/render.ts",
     "preview": "astro preview --port 4329 --ignore-lock",
     "test": "vitest run",
     "test:e2e": "playwright test",
     "validate": "html-validate \"dist/**/*.html\"",
-    "fetch:repos": "node scripts/fetch-repos.ts",
     "render": "node scripts/render.ts"
   },
   "dependencies": {

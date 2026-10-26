@@ -8,12 +8,8 @@ const sitemapPaths = () => {
   return [...xml.matchAll(/<loc>https:\/\/flyoverhead\.github\.io([^<]*)<\/loc>/g)].map((m) => m[1]);
 };
 
-test('sitemap lists home, six work pages and cv, not og', () => {
-  const paths = sitemapPaths();
-  expect(paths).toContain('/');
-  expect(paths).toContain('/cv/');
-  expect(paths.filter((p) => p.startsWith('/work/'))).toHaveLength(6);
-  expect(paths).not.toContain('/og/');
+test('sitemap lists only home, not og', () => {
+  expect(sitemapPaths()).toEqual(['/']);
 });
 
 test('robots.txt points at the sitemap', () => {
@@ -22,7 +18,7 @@ test('robots.txt points at the sitemap', () => {
 
 test('dist NDA scan clean', () => {
   const files = globSync('dist/**/*.{html,xml,txt,json}');
-  expect(files.length).toBeGreaterThan(8);
+  expect(files.length).toBeGreaterThan(2);
   expect(scanForbidden(files, [...BUILTIN_PATTERNS, ...loadDenylist()])).toEqual([]);
 });
 
@@ -49,7 +45,7 @@ for (const scheme of ['dark', 'light'] as const) {
   test.describe(`axe ${scheme}`, () => {
     test.use({ colorScheme: scheme });
     test(`axe: no violations (${scheme})`, async ({ page }) => {
-      for (const path of ['/', '/work/iac-platform/', '/cv/', '/no-such-page/']) {
+      for (const path of ['/', '/no-such-page/']) {
         await page.goto(path);
         const { violations } = await new AxeBuilder({ page }).analyze();
         expect(violations.map((v) => `${path}: ${v.id} (${v.nodes.length})`)).toEqual([]);
