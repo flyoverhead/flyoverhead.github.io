@@ -1,0 +1,52 @@
+---
+import type { Profile } from '../lib/schema.ts';
+
+const { profile } = Astro.props as { profile: Profile };
+---
+<section id="hero">
+  <h1>{profile.name}</h1>
+  <p class="title">{profile.title}</p>
+  <p class="pitch">{profile.pitch}</p>
+  <p class="pills">{profile.pills.map((p) => <span class="pill">{p}</span>)}</p>
+  <p class="actions">
+    <a class="btn primary" href="/cv.pdf">Download CV</a>
+    <a class="btn" href={`mailto:${profile.links.email}`}>Email</a>
+    <a class="btn" href={profile.links.github} rel="me">GitHub</a>
+    <a class="btn" href={profile.links.linkedin} rel="me">LinkedIn</a>
+  </p>
+</section>
+
+<style>
+  #hero {
+    padding-top: clamp(2rem, 6vw, 3.25rem);
+  }
+  h1 {
+    font-size: clamp(2.1rem, 6vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin: 0 0 0.25rem;
+  }
+  .title {
+    margin: 0 0 0.9rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .pitch {
+    max-width: 40rem;
+    font-size: 1.1rem;
+    margin: 0 0 1rem;
+  }
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 1.25rem;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+  }
+</style>

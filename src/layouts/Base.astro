@@ -1,0 +1,95 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import type { SectionKey } from '../components/sections.ts';
+import Sidebar from '../components/Sidebar.astro';
+import TitleBar from '../components/TitleBar.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  current?: SectionKey;
+}
+
+const { title, description, path, current } = Astro.props;
+const canonical = new URL(path, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#f6f3ff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#15121f" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        try {
+          const t = localStorage.getItem('theme');
+          if (t === 'dark' || t === 'light') root.dataset.theme = t;
+        } catch {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="sr-only" href="#main">Skip to content</a>
+    <div class="window">
+      <TitleBar current={current} />
+      <div class="window-body">
+        <Sidebar current={current} />
+        <main id="main">
+          <slot />
+        </main>
+      </div>
+      <Footer />
+    </div>
+  </body>
+</html>
+
+<style>
+  .window {
+    max-width: 76rem;
+    margin: clamp(0.5rem, 3vw, 2rem) auto;
+    background: var(--window);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid var(--window-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--window-shadow);
+  }
+  @media (max-width: 599px) {
+    .window {
+      margin: 0.5rem;
+    }
+  }
+  .window-body {
+    display: flex;
+  }
+  main {
+    flex: 1;
+    min-width: 0;
+    padding: 0 clamp(1rem, 4vw, 2.5rem) 1rem;
+    border-left: 1px solid var(--sep);
+  }
+  @media (max-width: 899px) {
+    main {
+      border-left: 0;
+    }
+  }
+</style>

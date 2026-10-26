@@ -1,0 +1,114 @@
+---
+import { loadSiteData } from '../lib/data.ts';
+
+const { profile } = loadSiteData();
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>OG card</title>
+  </head>
+  <body>
+    <div class="wall">
+      <div class="win">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <div class="content">
+          <h1>{profile.name}</h1>
+          <p class="title">{profile.title}</p>
+          <p class="pitch">{profile.pitch}</p>
+          <p class="tags">
+            <span style="--c:#0a84ff">Platform</span><span style="--c:#bf5af2">AI &amp; Claude</span><span style="--c:#ff9f0a">Kubernetes</span><span style="--c:#30d158">Open source</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+  }
+  .wall {
+    width: 1200px;
+    height: 630px;
+    display: grid;
+    place-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(70% 60% at 0% 0%, #ffd6e8 0, transparent 60%),
+      radial-gradient(60% 60% at 100% 10%, #cfe3ff 0, transparent 60%),
+      radial-gradient(70% 70% at 60% 100%, #d8ffe9 0, transparent 60%),
+      #f6f3ff;
+  }
+  .win {
+    width: 1040px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid #ffffff;
+    box-shadow: 0 30px 70px rgba(80, 60, 140, 0.22);
+    overflow: hidden;
+  }
+  .bar {
+    display: flex;
+    gap: 12px;
+    padding: 20px 26px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .bar i {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ff5f57;
+  }
+  .bar i:nth-child(2) {
+    background: #febc2e;
+  }
+  .bar i:nth-child(3) {
+    background: #28c840;
+  }
+  .content {
+    padding: 44px 60px 52px;
+    color: #1d1d1f;
+  }
+  h1 {
+    font-size: 76px;
+    letter-spacing: -0.03em;
+    margin: 0 0 6px;
+  }
+  .title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #5f5f66;
+    margin: 0 0 18px;
+  }
+  .pitch {
+    font-size: 26px;
+    line-height: 1.4;
+    margin: 0 0 26px;
+    max-width: 900px;
+  }
+  .tags {
+    display: flex;
+    gap: 12px;
+    margin: 0;
+  }
+  .tags span {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    padding: 6px 18px;
+    border-radius: 99px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .tags span::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--c);
+  }
+</style>

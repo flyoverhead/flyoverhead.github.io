@@ -1,0 +1,8 @@
+- group: Languages
+  items: [Go, Python, Bash]
+- group: Platforms
+  items: [Kubernetes, OpenStack, AWS, VMware, Ceph, Linux, Windows]
+- group: Infrastructure as code
+  items: [Terraform / OpenTofu, Ansible, Packer, Flux]
+- group: Delivery & security
+  items: [GitLab CI, Vault, Prometheus / Grafana]

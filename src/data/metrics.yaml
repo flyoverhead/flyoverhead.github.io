@@ -1,0 +1,8 @@
+- value: "600"
+  label: repos on the platform
+- value: 100+
+  label: Ansible roles
+- value: ~20
+  label: CI components
+- value: 12 · 31
+  label: Claude Code plugins · skills

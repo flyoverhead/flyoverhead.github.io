@@ -1,0 +1,167 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadSiteData } from '../lib/data.ts';
+
+const { profile, experience, certificates, stack } = loadSiteData();
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const fmt = (ym: string | null) => (ym ? `${MONTHS[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}` : 'present');
+const site = 'https://flyoverhead.github.io';
+---
+<Base title="CV — Aleksandr Letunov" description="CV of Aleksandr Letunov, DevSecOps and platform engineering tech lead: IaC platforms, Kubernetes, Claude Code. Open to relocation." path="/cv/" current="cv">
+  <article class="cv">
+    <p class="no-print actions"><a class="btn primary" href="/cv.pdf">Download PDF</a></p>
+    <header class="cv-head">
+      <h1>{profile.name}</h1>
+      <p class="title">{profile.title} · {profile.pills.join(' · ')}</p>
+      <p class="contact">
+        <a href={`mailto:${profile.links.email}`}>{profile.links.email}</a>{' · '}
+        <a href={profile.links.linkedin}>linkedin.com/in/aleksandr-letunov-89427314b</a>{' · '}
+        <a href={profile.links.github}>github.com/flyoverhead</a>{' · '}
+        <a href={site}>flyoverhead.github.io</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>Summary</h2>
+      <p>
+        Platform engineering tech lead with four years in DevOps and platform engineering. Largest
+        contributor across a 600-repository infrastructure estate, owning the internal developer
+        platform end to end: ~20 reusable GitLab CI components, 100+ Ansible roles, Terraform modules
+        and containerised CI execution environments. I build the platform other engineers ship on, and
+        the Claude Code agents that help them do it.
+      </p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      {
+        experience.roles.map((r) => (
+          <div class="cv-role">
+            <h3>
+              {r.title} · {r.employer}
+              <span class="when">
+                {fmt(r.start)} – {fmt(r.end)}
+              </span>
+            </h3>
+            <p class="summary">{r.summary}</p>
+            <ul>
+              {r.highlights.map((h) => <li>{h}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+      <div class="cv-before">
+        <h3>
+          Before infrastructure <span class="when">{experience.beforeInfra.period}</span>
+        </h3>
+        <p>{experience.beforeInfra.text}</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <ul class="plain">
+        {stack.map((g) => <li><b>{g.group}:</b> {g.items.join(', ')}</li>)}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Certifications</h2>
+      <ul class="plain">
+        {certificates.map((c) => <li>{c.issuer === 'Claude Academy' ? `Claude Academy: ${c.name}` : c.name}</li>)}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <p>{experience.education.school} — {experience.education.degree}, {experience.education.period}</p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .cv {
+    max-width: 50rem;
+    padding-block: 2rem;
+  }
+  .actions {
+    margin: 0 0 1.5rem;
+  }
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+  .title {
+    margin: 0.2rem 0;
+    font-weight: 600;
+    color: var(--heading);
+  }
+  .contact {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.25rem;
+    margin: 1.75rem 0 0.75rem;
+  }
+  h3 {
+    font-size: 1rem;
+    margin: 0 0 0.2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+  }
+  .when {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .cv-role,
+  .cv-before {
+    margin-bottom: 1rem;
+    break-inside: avoid;
+  }
+  .summary {
+    margin: 0 0 0.3rem;
+  }
+  ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+  }
+  ul.plain {
+    list-style: none;
+    padding: 0;
+    break-inside: avoid;
+  }
+  li {
+    margin-bottom: 0.2rem;
+  }
+  p {
+    font-size: 0.95rem;
+  }
+  @media print {
+    :global(html) {
+      font-size: 9.5pt;
+    }
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm;
+    }
+    .cv {
+      padding: 0;
+      max-width: none;
+    }
+    h2 {
+      break-after: avoid;
+    }
+  }
+</style>

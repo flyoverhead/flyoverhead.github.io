@@ -1,0 +1,14 @@
+- name: ansible-openwrt
+- name: terraform-proxmox-compute
+- name: video-summary
+- name: k3s
+  label: flyoverhead.k3s
+- name: docker
+  label: flyoverhead.docker
+- name: server
+  label: flyoverhead.server
+- name: macos
+  label: flyoverhead.macos
+- name: hosting
+  label: flyoverhead.hosting
+- name: keenetic

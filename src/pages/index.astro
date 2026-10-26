@@ -1,0 +1,32 @@
+---
+import AiSection from '../components/AiSection.astro';
+import Experience from '../components/Experience.astro';
+import Hero from '../components/Hero.astro';
+import ImpactStrip from '../components/ImpactStrip.astro';
+import OpenSource from '../components/OpenSource.astro';
+import Stack from '../components/Stack.astro';
+import WorkCards from '../components/WorkCards.astro';
+import repos from '../data/repos.snapshot.json';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { loadSiteData } from '../lib/data.ts';
+
+const data = loadSiteData();
+const work = (await getCollection('work'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((e) => ({ id: e.id, title: e.data.title, oneLiner: e.data.oneLiner, kind: e.data.kind }));
+---
+<Base
+  title="Aleksandr Letunov — DevSecOps & Platform Engineering Tech Lead"
+  description="Aleksandr Letunov, DevSecOps and platform engineering tech lead: IaC platforms, Kubernetes and Claude Code agents for infrastructure work."
+  path="/"
+  current="about"
+>
+  <Hero profile={data.profile} />
+  <ImpactStrip metrics={data.metrics} />
+  <WorkCards entries={work} />
+  <AiSection certificates={data.certificates} plugins={data.plugins} />
+  <OpenSource repos={repos} github={data.profile.links.github} />
+  <Experience experience={data.experience} />
+  <Stack stack={data.stack} />
+</Base>

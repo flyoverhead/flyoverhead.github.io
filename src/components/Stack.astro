@@ -1,0 +1,48 @@
+---
+import type { StackGroup } from '../lib/schema.ts';
+
+const { stack } = Astro.props as { stack: StackGroup[] };
+---
+<section id="stack" class="section">
+  <h2 class="section-title"><span class="tag" style="--tag: var(--teal)"></span>Stack</h2>
+  <dl>
+    {
+      stack.map((g) => (
+        <div class="row">
+          <dt>{g.group}</dt>
+          <dd>{g.items.map((i) => <span class="chip">{i}</span>)}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  dl {
+    margin: 0 0 1rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+  dt {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  dd {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  @media (max-width: 539px) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+  }
+</style>

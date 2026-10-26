@@ -1,0 +1,38 @@
+---
+import { loadSiteData } from '../lib/data.ts';
+
+const { links } = loadSiteData().profile;
+---
+<footer>
+  <h2>Get in touch</h2>
+  <ul>
+    <li><a class="btn" href={`mailto:${links.email}`}>Email</a></li>
+    <li><a class="btn" href={links.linkedin} rel="me">LinkedIn</a></li>
+    <li><a class="btn" href={links.github} rel="me">GitHub</a></li>
+    <li><a class="btn" href="/cv.pdf">CV (PDF)</a></li>
+  </ul>
+  <p class="muted small">{links.email}</p>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--sep);
+    padding: 2rem clamp(1rem, 4vw, 2.5rem) 2.5rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+    margin: 0 0 0.9rem;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .small {
+    font-size: 0.85rem;
+    margin: 0;
+  }
+</style>

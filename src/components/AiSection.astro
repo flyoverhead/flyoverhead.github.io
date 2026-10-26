@@ -1,0 +1,173 @@
+---
+import type { Certificate, Plugin } from '../lib/schema.ts';
+
+const { certificates, plugins } = Astro.props as { certificates: Certificate[]; plugins: Plugin[] };
+const academy = certificates.filter((c) => c.issuer === 'Claude Academy');
+const day = [
+  ['Start of a change', 'clone every repository involved in one step, and agree a plan before any code changes.'],
+  ['Writing', 'roles, modules and Go code start from the team templates, so review is about the change, not the layout.'],
+  ['Before every commit', 'the same linters as CI run locally and fix what they can.'],
+  ['Large rollouts', 'an agent that knows the estate helps design changes across many roles, which then roll out in small batches, with every pipeline run.'],
+  ['Paperwork', 'tickets and commit trailers follow the team conventions without a checklist.'],
+];
+---
+<section id="ai" class="section">
+  <h2 class="section-title"><span class="tag" style="--tag: var(--orange)"></span>AI &amp; Claude Code</h2>
+  <p class="lead">
+    I use Claude Code as an everyday engineering tool, not a chat window. I built and maintain my
+    team's plugin marketplace: skills, agents and MCP integrations that carry our standards for
+    Ansible, Terraform, Go and CI. With them, a Terraform module takes days instead of weeks, and an
+    Ansible role takes a day instead of a week.
+  </p>
+  <p class="marketplace-stats">
+    <span class="stat"><b>12</b> plugins</span>
+    <span class="stat"><b>31</b> skills</span>
+    <span class="stat"><b>6</b> agents</span>
+    <span class="muted">in the team marketplace</span>
+  </p>
+
+  <h3 class="sub">How it fits my day</h3>
+  <ol class="day">
+    {day.map(([when, what]) => <li><b>{when}:</b> {what}</li>)}
+  </ol>
+
+  <h3 class="sub">Plugins I use most</h3>
+  <ul class="plugins">
+    {
+      plugins.map((p) => (
+        <li class="plugin surface">
+          <div class="head">
+            <h4 class="mono">{p.name}</h4>
+            {p.daily && <span class="daily">daily</span>}
+          </div>
+          <p class="summary">{p.summary}</p>
+          <p class="use">{p.useCase}</p>
+          <p class="parts">
+            {p.skills.map((s) => <span class="part mono">{s}</span>)}
+            {p.agents.map((a) => <span class="part agent mono" title="agent">{a}</span>)}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p>
+    Public example:{' '}
+    <a href="https://github.com/flyoverhead/video-summary">video-summary</a>, a Claude Code plugin
+    that turns a folder of camera footage into a summary video.
+  </p>
+  <h3 class="sub">Claude Academy certificates</h3>
+  <ul class="certs">
+    {academy.map((c) => <li class="chip">{c.url ? <a href={c.url}>{c.name}</a> : c.name}</li>)}
+  </ul>
+</section>
+
+<style>
+  .lead {
+    max-width: 44rem;
+  }
+  .marketplace-stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .stat {
+    padding: 0.2rem 0.75rem;
+    border-radius: 99px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+  }
+  .stat b {
+    color: var(--orange);
+  }
+  .sub {
+    font-size: 0.95rem;
+    margin: 1.5rem 0 0.6rem;
+  }
+  .day {
+    margin: 0;
+    padding-left: 1.3rem;
+    max-width: 46rem;
+  }
+  .day li {
+    margin-bottom: 0.35rem;
+  }
+  .day li::marker {
+    color: var(--orange);
+    font-weight: 700;
+  }
+  .plugins {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .plugin {
+    padding: 0.9rem 1rem;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  h4 {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .daily {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.05rem 0.5rem;
+    border-radius: 99px;
+    background: var(--selected-bg);
+    color: var(--selected-fg);
+  }
+  .summary {
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .use {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .parts {
+    margin: 0.2rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  .part {
+    font-size: 0.72rem;
+    padding: 0.05rem 0.45rem;
+    border-radius: 5px;
+    background: var(--sep);
+  }
+  .part.agent {
+    background: none;
+    border: 1px solid var(--surface-border);
+    color: var(--purple);
+  }
+  .certs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  @media (max-width: 719px) {
+    .plugins {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

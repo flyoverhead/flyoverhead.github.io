@@ -1,0 +1,66 @@
+---
+import { SECTIONS, type SectionKey } from './sections.ts';
+
+const { current } = Astro.props as { current?: SectionKey };
+---
+<aside class="sidebar" aria-label="Sections">
+  <p class="heading">Sections</p>
+  <ul>
+    {
+      SECTIONS.map((s) => (
+        <li>
+          <a href={s.href} aria-current={s.key === current ? 'page' : undefined}>
+            <span class="tag" style={`--tag: var(--${s.color})`} />
+            {s.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</aside>
+
+<style>
+  .sidebar {
+    position: sticky;
+    top: 4rem;
+    align-self: start;
+    width: 13rem;
+    padding: 1.25rem 0.75rem;
+  }
+  .heading {
+    margin: 0 0 0.4rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  a:hover {
+    background: var(--sep);
+    color: inherit;
+  }
+  a[aria-current='page'] {
+    background: var(--selected-bg);
+    color: var(--selected-fg);
+    font-weight: 600;
+  }
+  @media (max-width: 899px) {
+    .sidebar {
+      display: none;
+    }
+  }
+</style>

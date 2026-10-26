@@ -1,0 +1,123 @@
+:root {
+  --wall-base: #f6f3ff;
+  --wall-1: #ffb8d6;
+  --wall-2: #a9cdff;
+  --wall-3: #b5f5d2;
+  --window: rgba(255, 255, 255, 0.66);
+  --window-border: rgba(255, 255, 255, 0.9);
+  --window-shadow: 0 24px 60px rgba(80, 60, 140, 0.18);
+  --titlebar: rgba(250, 249, 255, 0.82);
+  --surface: #ffffff;
+  --surface-border: rgba(0, 0, 0, 0.07);
+  --surface-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --sep: rgba(0, 0, 0, 0.08);
+  --text: #1d1d1f;
+  --heading: #1d1d1f;
+  --muted: #5f5f66;
+  --blue: #0066cc;
+  --purple: #8944ab;
+  --orange: #b25000;
+  --green: #1e7b34;
+  --pink: #c41e56;
+  --teal: #0b7285;
+  --selected-bg: rgba(10, 132, 255, 0.14);
+  --selected-fg: #0058b0;
+  --btn-bg: #ffffff;
+  --btn-border: rgba(0, 0, 0, 0.12);
+  --primary-from: #0a6cdc;
+  --primary-to: #0050b3;
+  --primary-text: #ffffff;
+  --note-fg: #7d4e00;
+  --note-bg: #fff4d6;
+  --note-border: #f0c36d;
+  color-scheme: light;
+
+  --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --radius: 10px;
+  --radius-lg: 14px;
+}
+
+:root[data-theme='dark'] {
+  --wall-base: #15121f;
+  --wall-1: #4a1f8c;
+  --wall-2: #143b8a;
+  --wall-3: #741c55;
+  --window: rgba(32, 29, 44, 0.68);
+  --window-border: rgba(255, 255, 255, 0.1);
+  --window-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  --titlebar: rgba(40, 37, 54, 0.85);
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-border: rgba(255, 255, 255, 0.1);
+  --surface-shadow: none;
+  --sep: rgba(255, 255, 255, 0.1);
+  --text: #ececf1;
+  --heading: #ffffff;
+  --muted: #a8a8b3;
+  --blue: #64d2ff;
+  --purple: #da8fff;
+  --orange: #ffb340;
+  --green: #30d158;
+  --pink: #ff6482;
+  --teal: #5de6d0;
+  --selected-bg: rgba(100, 210, 255, 0.16);
+  --selected-fg: #9fe1ff;
+  --btn-bg: rgba(255, 255, 255, 0.08);
+  --btn-border: rgba(255, 255, 255, 0.16);
+  --note-fg: #ffd479;
+  --note-bg: rgba(255, 179, 64, 0.12);
+  --note-border: rgba(255, 179, 64, 0.4);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --wall-base: #15121f;
+    --wall-1: #4a1f8c;
+    --wall-2: #143b8a;
+    --wall-3: #741c55;
+    --window: rgba(32, 29, 44, 0.68);
+    --window-border: rgba(255, 255, 255, 0.1);
+    --window-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    --titlebar: rgba(40, 37, 54, 0.85);
+    --surface: rgba(255, 255, 255, 0.06);
+    --surface-border: rgba(255, 255, 255, 0.1);
+    --surface-shadow: none;
+    --sep: rgba(255, 255, 255, 0.1);
+    --text: #ececf1;
+    --heading: #ffffff;
+    --muted: #a8a8b3;
+    --blue: #64d2ff;
+    --purple: #da8fff;
+    --orange: #ffb340;
+    --green: #30d158;
+    --pink: #ff6482;
+    --teal: #5de6d0;
+    --selected-bg: rgba(100, 210, 255, 0.16);
+    --selected-fg: #9fe1ff;
+    --btn-bg: rgba(255, 255, 255, 0.08);
+    --btn-border: rgba(255, 255, 255, 0.16);
+    --note-fg: #ffd479;
+    --note-bg: rgba(255, 179, 64, 0.12);
+    --note-border: rgba(255, 179, 64, 0.4);
+    color-scheme: dark;
+  }
+}
+
+@media print {
+  /* Must outrank :root:not([data-theme]) in the dark media block. */
+  :root:root:root,
+  :root[data-theme]:root {
+    --wall-base: #ffffff;
+    --window: #ffffff;
+    --surface: #ffffff;
+    --text: #1d1d1f;
+    --heading: #000000;
+    --muted: #4a4a50;
+    --sep: #d2d2d7;
+    --blue: #0058b0;
+    --note-fg: #7d4e00;
+    --note-bg: #ffffff;
+    color-scheme: light;
+  }
+}
