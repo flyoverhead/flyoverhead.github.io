@@ -1,7 +1,4 @@
-import { readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
-
-const snapshot = JSON.parse(readFileSync('src/data/repos.snapshot.json', 'utf8')) as { name: string; label?: string; stars: number }[];
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -14,56 +11,40 @@ test('hero', async ({ page }) => {
   await expect(hero).toContainText(
     'I built the IaC platform hundreds of repositories run on, and I build Claude Code agents for infrastructure work.',
   );
-  await expect(hero.getByRole('link', { name: 'Download CV' })).toHaveAttribute('href', '/cv.pdf');
-  await expect(hero.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:a.b.letunov@gmail.com');
-  await expect(hero).toContainText('open to relocation');
-});
-
-test('work cards show app icons', async ({ page }) => {
-  await expect(page.locator('#work .card .app-icon')).toHaveCount(6);
+  await expect(hero.getByRole('link')).toHaveText(['GitHub', 'LinkedIn']);
+  await expect(hero).not.toContainText('relocation');
+  await expect(hero).not.toContainText('UTC');
 });
 
 test('impact', async ({ page }) => {
   await expect(page.locator('#impact li b')).toHaveText(['600', '100+', '~20', '12 · 31']);
 });
 
-test('ai', async ({ page }) => {
+test('work shows two cards with icons and no links', async ({ page }) => {
+  const cards = page.locator('#work .card');
+  await expect(cards.locator('h3')).toHaveText(['Greenfield IaC platform', 'AI plugin marketplace']);
+  await expect(cards.locator('.app-icon')).toHaveCount(2);
+  await expect(cards.locator('p')).toHaveCount(2);
+  await expect(page.locator('#work a')).toHaveCount(0);
+});
+
+test('ai keeps the lead paragraph and marketplace counts only', async ({ page }) => {
   const ai = page.locator('#ai');
-  await expect(ai.locator('.certs li')).toHaveCount(6);
-  for (const name of ['Claude 101', 'Claude Code in Action', 'Model Context Protocol: Advanced topics']) {
-    await expect(ai).toContainText(name);
-  }
-  await expect(ai.locator('a[href="https://github.com/flyoverhead/video-summary"]')).toHaveCount(1);
+  await expect(ai.locator('p.lead')).toContainText('I use Claude Code as an everyday engineering tool');
+  await expect(ai.locator('.stat')).toHaveText(['12 plugins', '31 skills', '6 agents']);
+  await expect(ai.locator('h3')).toHaveCount(0);
+  await expect(ai.locator('a')).toHaveCount(0);
 });
 
-test('ai section describes plugins and daily use', async ({ page }) => {
-  const ai = page.locator('#ai');
-  await expect(ai.locator('.plugin h4')).toHaveText([
-    'ansible', 'pre-commit', 'jira', 'terraform', 'golang', 'glab',
-  ]);
-  await expect(ai.locator('.plugin').first()).toContainText('molecule-scaffolder');
-  await expect(ai.locator('.day li')).toHaveCount(5);
-  await expect(ai.locator('.marketplace-stats')).toContainText('12 plugins');
-  await expect(ai.locator('.marketplace-stats')).toContainText('31 skills');
-  await expect(ai.locator('.marketplace-stats')).toContainText('6 agents');
+test('oss is a summary linking to the GitHub profile', async ({ page }) => {
+  const oss = page.locator('#oss');
+  await expect(oss.locator('p').first()).toContainText('Ansible collections');
+  await expect(oss.locator('li')).toHaveCount(0);
+  await expect(oss.getByRole('link')).toHaveAttribute('href', 'https://github.com/flyoverhead');
 });
 
-test('oss', async ({ page }) => {
-  const items = page.locator('#oss .repo');
-  await expect(items).toHaveCount(snapshot.length);
-  await expect(items.locator('.name')).toHaveText(snapshot.map((r) => r.label ?? r.name));
-  await expect(items.first()).toContainText(`★ ${snapshot[0].stars}`);
-  await expect(page.locator('#oss').getByRole('link', { name: /More on GitHub/ })).toHaveAttribute(
-    'href',
-    'https://github.com/flyoverhead',
-  );
-});
-
-test('experience', async ({ page }) => {
-  const exp = page.locator('#experience');
-  await expect(exp.locator('.role')).toHaveCount(4);
-  await expect(exp).toContainText('Before infrastructure');
-  await expect(exp).toContainText('Tambov State University');
+test('experience is gone', async ({ page }) => {
+  await expect(page.locator('#experience')).toHaveCount(0);
 });
 
 test('stack', async ({ page }) => {
@@ -74,7 +55,7 @@ test.describe('no javascript', () => {
   test.use({ javaScriptEnabled: false });
   test('content visible with JS disabled', async ({ page }) => {
     await page.goto('/');
-    for (const id of ['hero', 'impact', 'work', 'ai', 'oss', 'experience', 'stack']) {
+    for (const id of ['hero', 'impact', 'work', 'ai', 'oss', 'stack']) {
       await expect(page.locator(`#${id}`), id).toBeVisible();
     }
   });

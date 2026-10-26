@@ -4,8 +4,6 @@ on:
   push:
     branches: [main]
   pull_request:
-  schedule:
-    - cron: '0 5 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -40,8 +38,6 @@ jobs:
           echo "NDA_DENYLIST_FILE=$RUNNER_TEMP/nda-denylist.txt" >> "$GITHUB_ENV"
 
       - run: npm run build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: npm test
 

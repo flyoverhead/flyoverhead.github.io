@@ -1,14 +1,8 @@
 ---
 import AppIcon from './AppIcon.astro';
+import type { Work } from '../lib/schema.ts';
 
-export interface WorkCard {
-  id: string;
-  title: string;
-  oneLiner: string;
-  kind: string;
-}
-
-const { entries } = Astro.props as { entries: WorkCard[] };
+const { entries } = Astro.props as { entries: Work[] };
 ---
 <section id="work" class="section">
   <h2 class="section-title"><span class="tag" style="--tag: var(--purple)"></span>Selected work</h2>
@@ -18,9 +12,7 @@ const { entries } = Astro.props as { entries: WorkCard[] };
         <li class="card surface">
           <AppIcon kind={e.kind} />
           <div>
-            <h3>
-              <a href={`/work/${e.id}/`}>{e.title}</a>
-            </h3>
+            <h3>{e.title}</h3>
             <p>{e.oneLiner}</p>
           </div>
         </li>
@@ -39,32 +31,18 @@ const { entries } = Astro.props as { entries: WorkCard[] };
     gap: 0.75rem;
   }
   .card {
-    position: relative;
     display: flex;
     gap: 0.85rem;
     align-items: flex-start;
     padding: 0.95rem 1rem;
     min-width: 0;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .card > div {
     min-width: 0;
   }
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  }
   h3 {
     font-size: 1rem;
     margin: 0.1rem 0 0.3rem;
-  }
-  h3 a {
-    text-decoration: none;
-  }
-  h3 a::after {
-    content: '';
-    position: absolute;
-    inset: 0;
   }
   p {
     margin: 0;

@@ -21,17 +21,12 @@ try {
   const browser = await chromium.launch();
   const page = await browser.newPage({ colorScheme: 'light' });
 
-  await page.goto(`${base}/cv/`, { waitUntil: 'networkidle' });
-  await page.emulateMedia({ media: 'print' });
-  await page.pdf({ path: 'dist/cv.pdf', format: 'A4', printBackground: true });
-
   await page.setViewportSize({ width: 1200, height: 630 });
-  await page.emulateMedia({ media: 'screen' });
   await page.goto(`${base}/og/`, { waitUntil: 'networkidle' });
   await page.screenshot({ path: 'dist/og.png', clip: { x: 0, y: 0, width: 1200, height: 630 } });
 
   await browser.close();
-  console.log('rendered dist/cv.pdf and dist/og.png');
+  console.log('rendered dist/og.png');
 } catch (err) {
   console.error(err);
   process.exitCode = 1;

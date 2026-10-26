@@ -50,7 +50,7 @@ test.describe('narrow screens', () => {
   test('no horizontal scroll on every page at 360px', async ({ page }) => {
     const xml = readFileSync('dist/sitemap-0.xml', 'utf8');
     const urls = [...xml.matchAll(/<loc>https:\/\/flyoverhead\.github\.io([^<]*)<\/loc>/g)].map((m) => m[1]);
-    expect(urls.length).toBeGreaterThan(7);
+    expect(urls).toEqual(['/']);
     for (const url of urls) {
       await page.goto(url);
       const width = await page.evaluate(() => document.documentElement.scrollWidth);
@@ -59,28 +59,18 @@ test.describe('narrow screens', () => {
   });
 });
 
-test.describe('no javascript', () => {
-  test.use({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
-
-  test('mobile menu opens without JS', async ({ page }) => {
-    await page.goto('/');
-    const menu = page.locator('header.top details');
-    await menu.locator('summary').click();
-    await expect(menu.getByRole('link', { name: /experience/i })).toBeVisible();
-  });
-});
-
 test('footer has contact links', async ({ page }) => {
   await page.goto('/');
   const footer = page.locator('footer');
   await expect(footer).toContainText('Get in touch');
-  await expect(footer.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:a.b.letunov@gmail.com');
+  await expect(footer.getByRole('link')).toHaveText(['LinkedIn', 'GitHub']);
+  await expect(footer).not.toContainText('@');
 });
 
 test('in-page anchors land below the sticky header', async ({ page }) => {
-  await page.goto('/#experience');
+  await page.goto('/#stack');
   const headerBottom = await page.locator('header.top').evaluate((e) => e.getBoundingClientRect().bottom);
-  const headingTop = await page.locator('#experience h2').evaluate((e) => e.getBoundingClientRect().top);
+  const headingTop = await page.locator('#stack h2').evaluate((e) => e.getBoundingClientRect().top);
   expect(headingTop).toBeGreaterThanOrEqual(headerBottom);
 });
 
@@ -94,15 +84,12 @@ test('skip link is visible when focused', async ({ page }) => {
   expect(box?.height ?? 0).toBeGreaterThan(10);
 });
 
-test('window title bar has traffic lights and a segmented control', async ({ page }) => {
+test('title bar has no traffic lights or menus', async ({ page }) => {
   await page.goto('/');
   const bar = page.locator('header.top');
-  await expect(bar.locator('.lights i')).toHaveCount(3);
-  const seg = bar.locator('.segmented a');
-  await expect(seg).toHaveText(['Overview', 'Work', 'CV']);
-  await expect(seg.nth(0)).toHaveAttribute('href', '/');
-  await expect(seg.nth(1)).toHaveAttribute('href', '/#work');
-  await expect(seg.nth(2)).toHaveAttribute('href', '/cv/');
+  await expect(bar.locator('.lights')).toHaveCount(0);
+  await expect(bar.locator('nav, details, a')).toHaveCount(0);
+  await expect(bar.getByRole('button', { name: /theme/i })).toBeVisible();
 });
 
 test.describe('sidebar', () => {
@@ -111,16 +98,12 @@ test.describe('sidebar', () => {
   test('shows coloured section tags on desktop', async ({ page }) => {
     await page.goto('/');
     const items = page.locator('aside.sidebar a');
-    await expect(items).toHaveText(['About', 'Selected work', 'AI & Claude', 'Open source', 'Experience', 'CV']);
+    await expect(items).toHaveText(['About', 'Selected work', 'AI & Claude', 'Open source', 'Stack']);
     await expect(items.first()).toHaveAttribute('aria-current', 'page');
     const dot = await items.nth(1).locator('.tag').evaluate((e) => getComputedStyle(e).backgroundColor);
     expect(dot).not.toBe('rgba(0, 0, 0, 0)');
   });
 
-  test('case pages highlight Selected work', async ({ page }) => {
-    await page.goto('/work/iac-platform/');
-    await expect(page.locator('aside.sidebar a[aria-current="page"]')).toHaveText('Selected work');
-  });
 });
 
 test.describe('sidebar on phones', () => {
@@ -129,11 +112,4 @@ test.describe('sidebar on phones', () => {
     await page.goto('/');
     await expect(page.locator('aside.sidebar')).toBeHidden();
   });
-});
-
-test('segmented control marks the current page', async ({ page }) => {
-  for (const [url, label] of [['/', 'Overview'], ['/work/iac-platform/', 'Work'], ['/cv/', 'CV']]) {
-    await page.goto(url);
-    await expect(page.locator('header.top .segmented a[aria-current="page"]'), url).toHaveText(label);
-  }
 });

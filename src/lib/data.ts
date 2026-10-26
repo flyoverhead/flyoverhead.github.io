@@ -3,30 +3,21 @@ import { join } from 'node:path';
 import type { z } from 'astro/zod';
 import { parse } from 'yaml';
 import {
-  certificateSchema,
-  experienceSchema,
   metricSchema,
-  pluginSchema,
   profileSchema,
-  repoRefSchema,
   stackGroupSchema,
-  type Certificate,
-  type Experience,
+  workSchema,
   type Metric,
-  type Plugin,
   type Profile,
-  type RepoRef,
   type StackGroup,
+  type Work,
 } from './schema.ts';
 
 export interface SiteData {
   profile: Profile;
   metrics: Metric[];
-  experience: Experience;
-  certificates: Certificate[];
+  work: Work[];
   stack: StackGroup[];
-  repos: RepoRef[];
-  plugins: Plugin[];
 }
 
 function load<T extends z.ZodType>(dir: string, file: string, schema: T): z.infer<T> {
@@ -39,12 +30,9 @@ function load<T extends z.ZodType>(dir: string, file: string, schema: T): z.infe
 
 export function loadSiteData(dir = 'src/data'): SiteData {
   return {
-    profile: load(dir, 'profile.yaml', profileSchema),
+    profile: load(dir, 'profile.yaml', profileSchema.strict()),
     metrics: load(dir, 'metrics.yaml', metricSchema.array()),
-    experience: load(dir, 'experience.yaml', experienceSchema),
-    certificates: load(dir, 'certificates.yaml', certificateSchema.array()),
+    work: load(dir, 'work.yaml', workSchema.array()),
     stack: load(dir, 'stack.yaml', stackGroupSchema.array()),
-    repos: load(dir, 'repos.yaml', repoRefSchema.array()),
-    plugins: load(dir, 'plugins.yaml', pluginSchema.array()),
   };
 }
