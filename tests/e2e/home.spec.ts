@@ -7,9 +7,9 @@ test.beforeEach(async ({ page }) => {
 test('hero', async ({ page }) => {
   const hero = page.locator('#hero');
   await expect(hero.locator('h1')).toHaveText('Aleksandr Letunov');
-  await expect(hero).toContainText('DevSecOps & Platform Engineering Tech Lead');
+  await expect(hero).toContainText('Platform Engineering Lead · IaC, DevSecOps & AI');
   await expect(hero).toContainText(
-    'I built the IaC platform hundreds of repositories run on, and I build Claude Code agents for infrastructure work.',
+    'I build and lead the IaC platform ~680 repositories run on, secure it by default, and make it work with AI agents.',
   );
   await expect(hero.getByRole('link')).toHaveText(['GitHub', 'LinkedIn']);
   await expect(hero).not.toContainText('relocation');
@@ -17,21 +17,26 @@ test('hero', async ({ page }) => {
 });
 
 test('impact', async ({ page }) => {
-  await expect(page.locator('#impact li b')).toHaveText(['600', '100+', '~20', '12 · 31']);
+  await expect(page.locator('#impact li b')).toHaveText(['~680', '~80', '21', '11 · 58']);
 });
 
-test('work shows two cards with icons and no links', async ({ page }) => {
+test('work shows four cards with icons and no links', async ({ page }) => {
   const cards = page.locator('#work .card');
-  await expect(cards.locator('h3')).toHaveText(['Greenfield IaC platform', 'AI plugin marketplace']);
-  await expect(cards.locator('.app-icon')).toHaveCount(2);
-  await expect(cards.locator('p')).toHaveCount(2);
+  await expect(cards.locator('h3')).toHaveText([
+    'IaC platform & CI components',
+    'Least-privilege CI & signed artifacts',
+    'AI-operable infrastructure',
+    'Golden-image factory',
+  ]);
+  await expect(cards.locator('.app-icon')).toHaveCount(4);
+  await expect(cards.locator('p')).toHaveCount(4);
   await expect(page.locator('#work a')).toHaveCount(0);
 });
 
 test('ai keeps the lead paragraph and marketplace counts only', async ({ page }) => {
   const ai = page.locator('#ai');
   await expect(ai.locator('p.lead')).toContainText('I use Claude Code as an everyday engineering tool');
-  await expect(ai.locator('.stat')).toHaveText(['12 plugins', '31 skills', '6 agents']);
+  await expect(ai.locator('.stat')).toHaveText(['11 plugins', '21 skills', '6 agents', '58 eval suites']);
   await expect(ai.locator('h3')).toHaveCount(0);
   await expect(ai.locator('a')).toHaveCount(0);
 });

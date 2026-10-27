@@ -5,4 +5,6 @@
 - group: Infrastructure as code
   items: [Terraform / OpenTofu, Ansible, Packer, Flux]
 - group: Delivery & security
-  items: [GitLab CI, Vault, Prometheus / Grafana]
+  items: [GitLab CI, Vault, cosign / SBOM, Prometheus / Grafana]
+- group: AI engineering
+  items: [Claude Code, MCP, LLM evals]

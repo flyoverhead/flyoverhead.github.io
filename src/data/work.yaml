@@ -1,6 +1,12 @@
-- title: Greenfield IaC platform
+- title: IaC platform & CI components
   kind: platform
-  oneLiner: Built during my probation period, then adopted as the organisation's standard for service delivery.
-- title: AI plugin marketplace
+  oneLiner: A greenfield IaC platform, adopted as the organisation's standard for service delivery. Reusable GitLab CI/CD components and signed execution environments that nearly every IaC repository builds on.
+- title: Least-privilege CI & signed artifacts
+  kind: security
+  oneLiner: Rolling out short-lived per-role identities in Vault in place of one broad CI secrets token, with read-only twins for merge-request runs, proven by a deny-matrix test harness. Images, charts and GitOps artifacts are signed through Vault, with SBOMs.
+- title: AI-operable infrastructure
   kind: ai
-  oneLiner: "Claude Code plugins for the team: Terraform modules in days instead of weeks, Ansible roles in a day instead of a week."
+  oneLiner: Eval-gated Claude Code skills, a shared knowledge corpus and MCP integrations, so agents follow team conventions and stay in check mode. Terraform modules in days instead of weeks.
+- title: Golden-image factory
+  kind: reliability
+  oneLiner: Linux and Windows Server images built as code and published to OpenStack in every datacentre and to vSphere.
