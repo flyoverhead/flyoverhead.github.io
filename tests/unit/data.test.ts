@@ -11,20 +11,20 @@ describe('loadSiteData', () => {
 
   test('profile copy matches spec', () => {
     const { profile } = loadSiteData();
-    expect(profile.title).toBe('DevSecOps & Platform Engineering Tech Lead');
+    expect(profile.title).toBe('Platform Engineering Lead · IaC, DevSecOps & AI');
     expect(profile.pitch).toBe(
-      'I built the IaC platform hundreds of repositories run on, and I build Claude Code agents for infrastructure work.',
+      'I build and lead the IaC platform ~680 repositories run on, secure it by default, and make it work with AI agents.',
     );
   });
 
   test('metrics match spec', () => {
     const { metrics } = loadSiteData();
-    expect(metrics.map((m) => m.value)).toEqual(['600', '100+', '~20', '12 · 31']);
+    expect(metrics.map((m) => m.value)).toEqual(['~680', '~80', '21', '11 · 58']);
     expect(metrics.map((m) => m.label)).toEqual([
       'repos on the platform',
       'Ansible roles',
-      'CI components',
-      'Claude Code plugins · skills',
+      'CI components I created',
+      'AI plugins · eval suites',
     ]);
   });
 
@@ -44,10 +44,10 @@ describe('loadSiteData', () => {
     expect(profile).not.toHaveProperty('pills');
   });
 
-  test('selected work is the IaC platform and the AI marketplace', () => {
+  test('selected work covers platform, security, AI and images', () => {
     const { work } = loadSiteData();
-    expect(work.map((w) => w.title)).toEqual(['Greenfield IaC platform', 'AI plugin marketplace']);
-    expect(work.map((w) => w.kind)).toEqual(['platform', 'ai']);
+    expect(work.map((w) => w.title)).toEqual(['IaC platform & CI components', 'Least-privilege CI & signed artifacts', 'AI-operable infrastructure', 'Golden-image factory']);
+    expect(work.map((w) => w.kind)).toEqual(['platform', 'security', 'ai', 'reliability']);
     for (const w of work) expect(w.oneLiner.length, w.title).toBeGreaterThan(20);
   });
 });
