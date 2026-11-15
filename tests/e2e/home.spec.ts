@@ -17,7 +17,7 @@ test('hero', async ({ page }) => {
 });
 
 test('impact', async ({ page }) => {
-  await expect(page.locator('#impact li b')).toHaveText(['~680', '~80', '21', '11 · 58']);
+  await expect(page.locator('#impact li b')).toHaveText(['~680', '~80', '21', '13 · 81']);
 });
 
 test('work shows four cards with icons and no links', async ({ page }) => {
@@ -36,7 +36,7 @@ test('work shows four cards with icons and no links', async ({ page }) => {
 test('ai keeps the lead paragraph and marketplace counts only', async ({ page }) => {
   const ai = page.locator('#ai');
   await expect(ai.locator('p.lead')).toContainText('I use Claude Code as an everyday engineering tool');
-  await expect(ai.locator('.stat')).toHaveText(['11 plugins', '21 skills', '6 agents', '58 eval suites']);
+  await expect(ai.locator('.stat')).toHaveText(['13 plugins', '33 skills', '6 agents', '81 eval suites']);
   await expect(ai.locator('h3')).toHaveCount(0);
   await expect(ai.locator('a')).toHaveCount(0);
 });
@@ -45,7 +45,8 @@ test('oss is a summary linking to the GitHub profile', async ({ page }) => {
   const oss = page.locator('#oss');
   await expect(oss.locator('p').first()).toContainText('Ansible collections');
   await expect(oss.locator('li')).toHaveCount(0);
-  await expect(oss.getByRole('link')).toHaveAttribute('href', 'https://github.com/flyoverhead');
+  await expect(oss.getByRole('link', { name: 'All projects on GitHub' })).toHaveAttribute('href', 'https://github.com/flyoverhead');
+  await expect(oss.getByRole('link', { name: 'devops-plugins' })).toHaveAttribute('href', 'https://github.com/flyoverhead/devops-plugins');
 });
 
 test('experience is gone', async ({ page }) => {

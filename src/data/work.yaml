@@ -6,7 +6,7 @@
   oneLiner: Rolling out short-lived per-role identities in Vault in place of one broad CI secrets token, with read-only twins for merge-request runs, proven by a deny-matrix test harness. Images, charts and GitOps artifacts are signed through Vault, with SBOMs.
 - title: AI-operable infrastructure
   kind: ai
-  oneLiner: Eval-gated Claude Code skills, a shared knowledge corpus and MCP integrations, so agents follow team conventions and stay in check mode. Terraform modules in days instead of weeks.
+  oneLiner: Eval-gated Claude Code skills, a shared knowledge corpus and MCP integrations, so agents follow team conventions and stay in check mode, plus security plugins that fix scanner findings. Terraform modules in days instead of weeks.
 - title: Golden-image factory
   kind: reliability
   oneLiner: Linux and Windows Server images built as code and published to OpenStack in every datacentre and to vSphere.
