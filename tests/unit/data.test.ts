@@ -19,7 +19,7 @@ describe('loadSiteData', () => {
 
   test('metrics match spec', () => {
     const { metrics } = loadSiteData();
-    expect(metrics.map((m) => m.value)).toEqual(['~680', '~80', '21', '11 · 58']);
+    expect(metrics.map((m) => m.value)).toEqual(['~680', '~80', '21', '13 · 81']);
     expect(metrics.map((m) => m.label)).toEqual([
       'repos on the platform',
       'Ansible roles',
